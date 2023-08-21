@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using NZWalksAPI.CostumeActionFilters;
 using NZWalksAPI.Data;
 using NZWalksAPI.Models.Domain;
 using NZWalksAPI.Models.DTO;
@@ -12,6 +14,7 @@ namespace NZWalksAPI.Controllers
     // https://localhost:123/api/Regions
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class RegionsController : ControllerBase
     {
         protected readonly IRegionRepository regionRepository;
@@ -52,6 +55,7 @@ namespace NZWalksAPI.Controllers
 
         // https://localhost:[port]/api/regions
         [HttpPost]
+        [ValidateModel]
         public async Task<IActionResult> Create([FromBody] AddRegionRequestDto region)
         {
             var regiomDomainModel = mapper.Map<Region>(region);
@@ -66,8 +70,14 @@ namespace NZWalksAPI.Controllers
         // https://localhost:[port]/api/regions/:id
         [HttpPut]
         [Route("{id:Guid}")]
+        [ValidateModel]
         public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateRegionRequestDto regionUpdate)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             var regionDomainModel = mapper.Map<Region>(regionUpdate);
 
             regionDomainModel = await regionRepository.UpdateAsync(id, regionDomainModel);
