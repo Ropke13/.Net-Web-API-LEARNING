@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using NZWalksAPI.Models.Data;
+using NZWalksAPI.Models.Data.Auth;
 using NZWalksAPI.Repositories;
 using NZWalksAPI.Services;
 

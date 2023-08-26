@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace NZWalksAPI.Models.DTO
+namespace NZWalksAPI.Models.Data.Regiones
 {
-    public class AddRegionRequestDto
+    public class AddRegionData
     {
         [Required]
         [MaxLength(3, ErrorMessage = "Code has to be a minimum of 3 characters")]

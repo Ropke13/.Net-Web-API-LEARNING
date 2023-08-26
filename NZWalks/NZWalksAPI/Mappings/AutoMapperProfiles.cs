@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using NZWalksAPI.Models.Data.Difficulty;
+using NZWalksAPI.Models.Data.Regiones;
+using NZWalksAPI.Models.Data.Walks;
 using NZWalksAPI.Models.Domain;
-using NZWalksAPI.Models.DTO;
 
 namespace NZWalksAPI.Mappings
 {
@@ -9,9 +11,9 @@ namespace NZWalksAPI.Mappings
         public AutoMapperProfiles() 
         {
             //Region
-            CreateMap<Region, RegionDto>().ReverseMap();
-            CreateMap<Region, AddRegionRequestDto>().ReverseMap();
-            CreateMap<Region, UpdateRegionRequestDto>().ReverseMap();
+            CreateMap<Region, RegionData>().ReverseMap();
+            CreateMap<Region, AddRegionData>().ReverseMap();
+            CreateMap<Region, UpdateRegionData>().ReverseMap();
 
             //Walk
             CreateMap<Walk, AddWalkData>().ReverseMap();

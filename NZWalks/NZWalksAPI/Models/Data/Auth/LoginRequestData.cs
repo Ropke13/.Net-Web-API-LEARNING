@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace NZWalksAPI.Models.Data
+namespace NZWalksAPI.Models.Data.Auth
 {
     public class LoginRequestData
     {

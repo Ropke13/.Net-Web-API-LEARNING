@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace NZWalksAPI.Models.DTO
+namespace NZWalksAPI.Models.Data.Walks
 {
     public class UpdateWalkData
     {

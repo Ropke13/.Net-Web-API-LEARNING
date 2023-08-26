@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NZWalksAPI.CostumeActionFilters;
+using NZWalksAPI.Models.Data.Walks;
 using NZWalksAPI.Models.Domain;
-using NZWalksAPI.Models.DTO;
 using NZWalksAPI.Repositories;
 
 namespace NZWalksAPI.Controllers
@@ -30,6 +30,8 @@ namespace NZWalksAPI.Controllers
             if (walks.Count == 0) return NotFound();
 
             var walksData = mapper.Map<List<WalkData>>(walks);
+
+            throw new Exception("This is a new ex");
 
             return Ok(walksData);
         }

@@ -1,4 +1,4 @@
-﻿namespace NZWalksAPI.Models.Data
+﻿namespace NZWalksAPI.Models.Data.Auth
 {
     public class LoginResponseData
     {

@@ -1,24 +1,19 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using NZWalksAPI.Models.Data.Difficulty;
+using NZWalksAPI.Models.Data.Regiones;
 
-namespace NZWalksAPI.Models.DTO
+namespace NZWalksAPI.Models.Data.Walks
 {
-    public class AddWalkData
+    public class WalkData
     {
-        [Required]
+        public Guid Id { get; set; }
         public required string Name { get; set; }
-
-        [Required]
         public required string Description { get; set; }
-
-        [Required]
-        [Range(0, 50)]
         public double LenghtInKm { get; set; }
         public string? WalkImageUrl { get; set; }
-
-        [Required]
         public Guid DifficultyId { get; set; }
-
-        [Required]
         public Guid RegionId { get; set; }
+
+        public required RegionData Region { get; set; }
+        public required DifficultyData Difficulty { get; set; }
     }
 }

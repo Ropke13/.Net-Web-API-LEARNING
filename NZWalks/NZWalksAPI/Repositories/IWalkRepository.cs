@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using NZWalksAPI.Models.Domain;
-using NZWalksAPI.Models.DTO;
+﻿using NZWalksAPI.Models.Domain;
 
 namespace NZWalksAPI.Repositories
 {

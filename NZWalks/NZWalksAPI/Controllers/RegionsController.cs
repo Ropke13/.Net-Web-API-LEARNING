@@ -5,9 +5,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NZWalksAPI.CostumeActionFilters;
 using NZWalksAPI.Data;
+using NZWalksAPI.Models.Data.Regiones;
 using NZWalksAPI.Models.Domain;
-using NZWalksAPI.Models.DTO;
 using NZWalksAPI.Repositories;
+using System.Text.Json;
 
 namespace NZWalksAPI.Controllers
 {
@@ -18,23 +19,29 @@ namespace NZWalksAPI.Controllers
     {
         protected readonly IRegionRepository regionRepository;
         protected readonly IMapper mapper;
+        private readonly ILogger<RegionsController> logger;
 
-        public RegionsController(IRegionRepository regionRepository, IMapper mapper) 
+        public RegionsController(IRegionRepository regionRepository, IMapper mapper, ILogger<RegionsController> logger) 
         {
             this.regionRepository = regionRepository;
             this.mapper = mapper;
+            this.logger = logger;
         }
 
         // GET: https://localhost:[port]/api/regions
         [HttpGet]
-        [Authorize(Roles = "Reader, Writer")]
+        //[Authorize(Roles = "Reader, Writer")]
         public async Task<IActionResult> GetAll()
         {
+            logger.LogInformation("GetAll Regions Action Method was invoked");
+
             var regions = await regionRepository.GetAllAsync();
 
             if (regions.Count == 0) return NotFound();
 
-            var regionsData = mapper.Map<List<RegionDto>>(regions);
+            var regionsData = mapper.Map<List<RegionData>>(regions);
+
+            logger.LogInformation($"Finnished GetAllRegions with data: {JsonSerializer.Serialize(regionsData)}");
 
             return Ok(regionsData);
         }
@@ -49,7 +56,7 @@ namespace NZWalksAPI.Controllers
 
             if (region == null) return NotFound();
 
-            var regionsData = mapper.Map<RegionDto>(region);
+            var regionsData = mapper.Map<RegionData>(region);
 
             return Ok(regionsData);
         }
@@ -58,13 +65,13 @@ namespace NZWalksAPI.Controllers
         [HttpPost]
         [ValidateModel]
         [Authorize(Roles = "Writer")]
-        public async Task<IActionResult> Create([FromBody] AddRegionRequestDto region)
+        public async Task<IActionResult> Create([FromBody] AddRegionData region)
         {
             var regiomDomainModel = mapper.Map<Region>(region);
 
             regiomDomainModel = await regionRepository.CreateAsync(regiomDomainModel);
 
-            var regionDto = mapper.Map<AddRegionRequestDto>(regiomDomainModel);
+            var regionDto = mapper.Map<AddRegionData>(regiomDomainModel);
 
             return CreatedAtAction(nameof(GetById), new { id = regiomDomainModel.Id }, regionDto);
         }
@@ -74,7 +81,7 @@ namespace NZWalksAPI.Controllers
         [Route("{id:Guid}")]
         [ValidateModel]
         [Authorize(Roles = "Writer")]
-        public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateRegionRequestDto regionUpdate)
+        public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateRegionData regionUpdate)
         {
             if (!ModelState.IsValid)
             {
@@ -87,7 +94,7 @@ namespace NZWalksAPI.Controllers
 
             if(regionDomainModel == null) return NotFound();
 
-            var regionDto = mapper.Map<UpdateRegionRequestDto>(regionUpdate);
+            var regionDto = mapper.Map<UpdateRegionData>(regionUpdate);
 
             return Ok(regionDto);
         }
